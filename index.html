@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Knowledge Transfer</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Knowledge Transfer">
+  <meta name="author" content="Johannes Brenner">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="libraries/widgets/nvd3/css/nv.d3.css"></link>
+<link rel=stylesheet href="libraries/widgets/nvd3/css/rNVD3.css"></link>
+<link rel=stylesheet href="libraries/widgets/leaflet/external/leaflet.css"></link>
+<link rel=stylesheet href="libraries/widgets/leaflet/external/leaflet-rCharts.css"></link>
+<link rel=stylesheet href="libraries/widgets/leaflet/external/legend.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  <script src="libraries/widgets/nvd3/js/jquery-1.8.2.min.js"></script>
+<script src="libraries/widgets/nvd3/js/d3.v3.min.js"></script>
+<script src="libraries/widgets/nvd3/js/nv.d3.min-new.js"></script>
+<script src="libraries/widgets/nvd3/js/fisheye.js"></script>
+<script src="libraries/widgets/leaflet/external/leaflet.js"></script>
+<script src="libraries/widgets/leaflet/external/leaflet-providers.js"></script>
+<script src="libraries/widgets/leaflet/external/Control.FullScreen.js"></script>
+
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/logo.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Knowledge Transfer</h1>
+    <h2>R libraries for alpenv</h2>
+    <p>Johannes Brenner<br/>EURAC, Institute for Alpine Environment</p>
+  </hgroup>
+    <a href="https://github.com/JBrenn/KnowledgeTransferEURAC/zipball/gh-pages" class="example">
+     Download
+    </a>
+  <article></article>  
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Content</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>all following R libraries are hosted on my GitHub account: <a href="https://github.com/JBrenn">https://github.com/JBrenn</a></p>
+
+<ol class = "build incremental">
+<li><strong><a href="https://github.com/JBrenn/DataBaseAlpEnvEURAC">DataBaseAlpEnvEURAC</a></strong> - reading, formating, writing Mazia LTER data; post-process WISKI .rzx files</li>
+<li><strong><a href="https://github.com/JBrenn/SMCcalibration">SMCcalibration</a></strong> - shiny app for calibrting SMC sensors</li>
+<li><strong><a href="https://github.com/JBrenn/SpatialInterpol">SpatialInterpol</a></strong> - spatial interpolation using local ordinary kriging and inverse distance weighting</li>
+<li><strong><a href="https://github.com/JBrenn/AnalyseGEOtop">AnalyseGEOtop</a></strong> - GEOtop simulation analysis</li>
+<li><strong><a href="https://github.com/JBrenn/TopoSUB">TopoSUB</a></strong> - landscape k-means clustering &amp; land-surface modelling with GEOtop</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Intro R &amp; GitHub</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>version control</li>
+<li>branching</li>
+<li>R packages in GitHub can be installed with <strong>devtools::install_github</strong>:</li>
+</ul>
+
+<pre><code class="r">library(devtools)
+# install master branch
+install_github(&quot;JBrenn/DataBaseAlpEnvEURAC&quot;)
+# install different branch
+install_github(&quot;JBrenn/SMCcalibration@download&quot;)
+</code></pre>
+
+<ul>
+<li>place to gather alpenv scripts?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>DataBaseAlpEnvEURAC - get data 1</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>base function is <strong>dB_readStationData</strong></p></li>
+<li><p><strong>dB_updatedb</strong>: writing, updating SQlite database for specific variables or total data set (multiple stations and .csv output supported) - preperation for LTER database with fixed headers</p></li>
+<li><p><strong>dB_getMETEO</strong>: get meteo data  </p></li>
+<li><p><strong>dB_getGEOtop</strong>: get meteo data and convert to standard GEOtop meteo file format (multiple stations supported)</p></li>
+<li><p><strong>dB_getSWC</strong>: get soil moisture data</p></li>
+<li><p><strong>dB_getSoilTemp</strong>: get soil temperature data </p></li>
+<li><p><strong>dB_getSWP</strong>: get soil water pressure (B2)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:#EEE;">
+  <hgroup>
+    <h2>DataBaseAlpEnvEURAC - get data 2</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># load library
+library(DataBaseAlpEnvEURAC); library(dygraphs); library(zoo)
+# easy data access, e.g. SWC data station P2
+path2files &lt;- &quot;.../HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia/P/P2&quot;
+header.file &lt;- &quot;.../HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia/P/header_P2.txt&quot;
+P2 &lt;- dB_getSWC(path2files = path2files, header.file = header.file, station = &quot;P&quot;, 
+                station_nr = 2, aggregation = &quot;h&quot;, minVALUE = 0, maxVALUE = 1,
+                write.csv = FALSE, path2write = &quot;./&quot;)
+# use calibration function
+data(calibration); View(calibration)
+P2_cal &lt;- dB_getSWC(path2files = path2files, header.file = header.file, station = &quot;P&quot;, 
+                    station_nr = 2, aggregation = &quot;h&quot;, minVALUE = 0, maxVALUE = 1,
+                    calibrate=T)
+# compare
+P2_merge &lt;- merge(P2[,1], P2_cal[,1])
+time(P2_merge) &lt;- as.POSIXct(time(P2_merge))
+dygraphs(P2_merge)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <article data-timings="">
+    <iframe src="./assets/widgets/dygraph1.html" width=100% height=100% allowtransparency="true"> </iframe>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:#EEE;">
+  <hgroup>
+    <h2>DataBaseAlpEnvEURAC - update database</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># creating .sqlite database for specific variables or total data
+# for SWC .sqlite database is copied in data folder of SMCcalibrate package
+# this is needed for downloading data with the clibration shiny app
+
+P &lt;- dB_updatedb(stations = c(&quot;P1&quot;,&quot;P2&quot;,&quot;P3&quot;), variables = &quot;SWC&quot;, 
+                 inCloud = &quot;/home/jbre/Schreibtisch/&quot;, 
+                 write_csv = F, return_data = T)
+</code></pre>
+
+<ul>
+<li><strong>variables</strong>: &quot;TOTAL&quot;, &quot;METEO&quot;, &quot;SWC&quot;, &quot;TSoil&quot;</li>
+<li>multiple stations and variables supported</li>
+<li>possibility to write .csv for each station</li>
+<li>handle .sqlite with R package <em>RSQlite</em> or specific software (e.g. <a href="https://sourceforge.net/projects/sqliteman/">Sqliteman</a>)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:#EEE;">
+  <hgroup>
+    <h2>SMCcalibration</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># load libraries
+library(SMCcalibration)
+library(shiny)
+
+# easy data access
+data(&quot;SensorVSample&quot;)
+
+# data description
+?SensorVSample
+
+# reduce data
+data &lt;- unique(data[,-8])
+
+# run shiny app
+shinyApp(ui, server)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:#EEE;">
+  <hgroup>
+    <h2>DataBaseAlpEnvEURAC - postprocess .zrx</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><strong>dB_readZRX</strong> - read ZRX data file, working for single variable and multiple variables in .zrx file</li>
+<li>used by <strong>dB_readZRX2station</strong> - process ZRX data files, return .csv file for each station containing available variables.</li>
+</ul>
+
+<pre><code class="r">files &lt;- dir(&quot;/home/jbre/Schreibtisch/zrx/Mazia0480&quot;, full.names = T)
+mazia &lt;- dB_readZRX2station(files = files, write_csv = T, output_path = getwd(), 
+                            multivar = TRUE)
+plot(mazai$st0480)
+
+files &lt;- dir(&quot;/home/jbre/Schreibtisch/zrx/SouthTyrol&quot;, full.names = T)
+data &lt;- dB_readZRX2station(files = files, write_csv = F, output_path = getwd(), 
+                           multivar = FALSE)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Intro Rmarkdown</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p><strong>.Rmd files</strong> - An R Markdown (.Rmd) file is a record of your research. It contains the code that a scientist needs to reproduce your work along with the narration that a reader needs to understand your work.</p></li>
+<li><p><strong>Reproducible Research</strong> - At the click of a button you can rerun the code in an R Markdown file to reproduce your work and export the results as a finished report.</p></li>
+<li><p><strong>Dynamic Docs</strong> - You can choose to export the finished report as a html, pdf, MS Word, ODT, RTF, or markdown document; or as a html or pdf based slide show.</p></li>
+</ul>
+
+<p>Example: </p>
+
+<ul>
+<li>Download or clone Git repository DataBaseAlpEnvEURAC</li>
+<li>In the folder <em>Rmd</em> find the file <strong>01_data_preparation_climate_quality.rmd</strong></li>
+<li>open/run in RStudio</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:#EEE;">
+  <hgroup>
+    <h2>SpatialInterpol</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(SpatialInterpol)
+ordkrig100 &lt;- OrdKrig(datafolder = &quot;master&quot;)
+#ordkrig20  &lt;- OrdKrig(datafolder = &quot;master&quot;, npix = 20)
+idw     &lt;- OrdKrig(datafolder = &quot;master&quot;, inverseDistWeigths = TRUE)
+plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
+</code></pre>
+
+<p><img src="assets/fig/SpatialInterpol1-1.png" alt="plot of chunk SpatialInterpol1"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h3>SpatialInterpol results</h3>
+  </hgroup>
+  <article data-timings="">
+    <iframe src="./assets/widgets/leaflet1.html" width=100% height=100% allowtransparency="true"> </iframe>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>include a source, e.g. ref</h2>
+  </hgroup>
+  <article data-timings="">
+    <div class='source'>
+  Source: <a href='http://www.subtlepatterns.com'>Background from SubtlePatterns</a>
+</div>
+
+<style>
+em {
+  font-style: italic
+}
+strong {
+  font-weight: bold;
+}
+</style>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Content'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Intro R &amp; GitHub'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='DataBaseAlpEnvEURAC - get data 1'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='DataBaseAlpEnvEURAC - get data 2'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='NA'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='DataBaseAlpEnvEURAC - update database'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='SMCcalibration'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='DataBaseAlpEnvEURAC - postprocess .zrx'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Intro Rmarkdown'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='SpatialInterpol'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='SpatialInterpol results'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='include a source, e.g. ref'>
+         12
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
