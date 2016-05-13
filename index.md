@@ -20,7 +20,7 @@ github      : {user: JBrenn, repo: KnowledgeTransferEURAC}
 all following R libraries are hosted on my GitHub account: [https://github.com/JBrenn](https://github.com/JBrenn)
 
 > 1. **[DataBaseAlpEnvEURAC](https://github.com/JBrenn/DataBaseAlpEnvEURAC)** - reading, formating, writing Mazia LTER data; post-process WISKI .rzx files
-> 2. **[SMCcalibration](https://github.com/JBrenn/SMCcalibration)** - shiny app for calibrting SMC sensors
+> 2. **[SMCcalibration](https://github.com/JBrenn/SMCcalibration)** - shiny app for calibrating SMC sensors
 > 3. **[SpatialInterpol](https://github.com/JBrenn/SpatialInterpol)** - spatial interpolation using local ordinary kriging and inverse distance weighting
 > 4. **[AnalyseGEOtop](https://github.com/JBrenn/AnalyseGEOtop)** - GEOtop simulation analysis
 > 5. **[TopoSUB](https://github.com/JBrenn/TopoSUB)** - landscape k-means clustering & land-surface modelling with GEOtop
@@ -188,7 +188,6 @@ plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
 <iframe src="./assets/widgets/leaflet1.html" width=100% height=100% allowtransparency="true"> </iframe>
 
 ---
-
 
 ## include a source, e.g. ref
 
