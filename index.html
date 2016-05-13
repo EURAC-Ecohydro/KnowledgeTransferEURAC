@@ -133,23 +133,22 @@ install_github(&quot;JBrenn/SMCcalibration@download&quot;)
     <h2>DataBaseAlpEnvEURAC - get data 2</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r"># load library
-library(DataBaseAlpEnvEURAC); library(dygraphs); library(zoo)
+    <pre><code class="r"># load libraries
+library(DataBaseAlpEnvEURAC); library(dygraphs)
+
 # easy data access, e.g. SWC data station P2
-path2files &lt;- &quot;.../HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia/P/P2&quot;
-header.file &lt;- &quot;.../HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia/P/header_P2.txt&quot;
-P2 &lt;- dB_getSWC(path2files = path2files, header.file = header.file, station = &quot;P&quot;, 
-                station_nr = 2, aggregation = &quot;h&quot;, minVALUE = 0, maxVALUE = 1,
-                write.csv = FALSE, path2write = &quot;./&quot;)
+path2data &lt;- &quot;/media/alpenv/Projekte/HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia&quot;
+P2 &lt;- dB_getSWC(path2data = path2data, station = &quot;P2&quot;, aggregation = &quot;h&quot;, 
+                minVALUE = 0, maxVALUE = 1, write.csv = FALSE, path2write = &quot;./&quot;)
 # use calibration function
-data(calibration); View(calibration)
-P2_cal &lt;- dB_getSWC(path2files = path2files, header.file = header.file, station = &quot;P&quot;, 
-                    station_nr = 2, aggregation = &quot;h&quot;, minVALUE = 0, maxVALUE = 1,
-                    calibrate=T)
+data(&quot;calibration&quot;); View(calibration)
+P2_cal &lt;- dB_getSWC(path2data = path2data, station = &quot;P2&quot;, aggregation = &quot;h&quot;, 
+                    minVALUE = 0, maxVALUE = 1, calibrate=T)
 # compare
 P2_merge &lt;- merge(P2[,1], P2_cal[,1])
 time(P2_merge) &lt;- as.POSIXct(time(P2_merge))
-dygraphs(P2_merge)
+dygraph(P2_merge) %&gt;%
+  dyRangeSelector() %&gt;% dyRoller()
 </code></pre>
 
   </article>
@@ -171,7 +170,7 @@ dygraphs(P2_merge)
   <article data-timings="">
     <pre><code class="r"># creating .sqlite database for specific variables or total data
 # for SWC .sqlite database is copied in data folder of SMCcalibrate package
-# this is needed for downloading data with the clibration shiny app
+# this is needed for downloading data with the calibration shiny app
 
 P &lt;- dB_updatedb(stations = c(&quot;P1&quot;,&quot;P2&quot;,&quot;P3&quot;), variables = &quot;SWC&quot;, 
                  inCloud = &quot;/home/jbre/Schreibtisch/&quot;, 
@@ -203,6 +202,7 @@ data(&quot;SensorVSample&quot;)
 
 # data description
 ?SensorVSample
+View(SensorVSample)
 
 # reduce data
 data &lt;- unique(data[,-8])
@@ -222,17 +222,21 @@ shinyApp(ui, server)
   <article data-timings="">
     <ul>
 <li><strong>dB_readZRX</strong> - read ZRX data file, working for single variable and multiple variables in .zrx file</li>
-<li>used by <strong>dB_readZRX2station</strong> - process ZRX data files, return .csv file for each station containing available variables.</li>
+<li>used by <strong>dB_readZRX2station</strong> - process ZRX data files, returns .csv file for each station containing available variables and station meta data.</li>
 </ul>
 
-<pre><code class="r">files &lt;- dir(&quot;/home/jbre/Schreibtisch/zrx/Mazia0480&quot;, full.names = T)
-mazia &lt;- dB_readZRX2station(files = files, write_csv = T, output_path = getwd(), 
-                            multivar = TRUE)
-plot(mazai$st0480)
-
-files &lt;- dir(&quot;/home/jbre/Schreibtisch/zrx/SouthTyrol&quot;, full.names = T)
-data &lt;- dB_readZRX2station(files = files, write_csv = F, output_path = getwd(), 
+<pre><code class="r">files &lt;- dir(&quot;/home/jbre/Schreibtisch/zrx/SouthTyrol&quot;, full.names = T)
+data &lt;- dB_readZRX2station(files = files, write_csv = F, 
                            multivar = FALSE)
+
+path &lt;- &quot;/home/jbre/Schreibtisch/zrx/Mazia0480&quot;
+files &lt;- dir(path, full.names = T)
+mazia &lt;- dB_readZRX2station(files = files, write_csv = T, output_path = path, 
+                            multivar = TRUE)
+# show data.table
+library(DT)
+matschdata &lt;- read_csv(file.path(path,&quot;st0480_1440.csv&quot;))
+datatable(matschdata)
 </code></pre>
 
   </article>
@@ -240,6 +244,17 @@ data &lt;- dB_readZRX2station(files = files, write_csv = F, output_path = getwd(
 </slide>
 
 <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h3>Matsch-0480 data after postprocess</h3>
+  </hgroup>
+  <article data-timings="">
+    <iframe src="./assets/widgets/dt1.html" width=100% height=100% allowtransparency="true"> </iframe>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Intro Rmarkdown</h2>
   </hgroup>
@@ -262,7 +277,7 @@ data &lt;- dB_readZRX2station(files = files, write_csv = F, output_path = getwd(
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:#EEE;">
+<slide class="" id="slide-11" style="background:#EEE;">
   <hgroup>
     <h2>SpatialInterpol</h2>
   </hgroup>
@@ -280,7 +295,7 @@ plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h3>SpatialInterpol results</h3>
   </hgroup>
@@ -291,13 +306,62 @@ plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Analyse GEOtop</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Vignettes in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>long-form documentation for R packages</li>
+<li>install GitHub packages with vignettes accordingly</li>
+</ul>
+
+<pre><code class="r">library(devtools)
+
+# install GitHub R package &amp; build vignettes
+install_github(&quot;JBrenn/TopoSUB&quot;, build_vignettes = TRUE)
+
+# browse for package vignettes or look them up in package directory (&quot;doc&quot;)
+browseVignettes(&quot;TopoSUB&quot;)
+</code></pre>
+
+<ul>
+<li><a href="http://127.0.0.1:21307/library/TopoSUB/doc/Lect_1_RunTopoSUB.html">Run a TopoSUB simulation</a></li>
+<li><a href="http://127.0.0.1:21307/library/TopoSUB/doc/Lect_2_Postprocess.html">Postprocess a TopoSUB simulation</a></li>
+<li><a href="http://127.0.0.1:21307/library/TopoSUB/doc/Lect_3_Visualisation.html">Visualize a TopoSUB simulation</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>TopoSUB shiny app</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>include a source, e.g. ref</h2>
   </hgroup>
   <article data-timings="">
     <div class='source'>
-  Source: <a href='http://www.subtlepatterns.com'>Background from SubtlePatterns</a>
+  This presentation is built with <a href='http://slidify.org/'>slidify</a> THANKS to the developer <a href='https://github.com/ramnathv'>Ramnath Vaidyanathan</a>.
 </div>
 
 <style>
@@ -367,26 +431,50 @@ strong {
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Intro Rmarkdown'>
+        data-slide=9 title='Matsch-0480 data after postprocess'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='SpatialInterpol'>
+        data-slide=10 title='Intro Rmarkdown'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='SpatialInterpol results'>
+        data-slide=11 title='SpatialInterpol'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='include a source, e.g. ref'>
+        data-slide=12 title='SpatialInterpol results'>
          12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Analyse GEOtop'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Vignettes in R'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='TopoSUB shiny app'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='include a source, e.g. ref'>
+         16
       </a>
     </li>
   </ul>

@@ -63,23 +63,23 @@ install_github("JBrenn/SMCcalibration@download")
 
 ```{r DataBaseAlpEnvEURAC1, echo=T, eval=F}
 
-# load library
-library(DataBaseAlpEnvEURAC); library(dygraphs); library(zoo)
+# load libraries
+library(DataBaseAlpEnvEURAC); library(dygraphs)
+
 # easy data access, e.g. SWC data station P2
-path2files <- ".../HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia/P/P2"
-header.file <- ".../HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia/P/header_P2.txt"
-P2 <- dB_getSWC(path2files = path2files, header.file = header.file, station = "P", 
-                station_nr = 2, aggregation = "h", minVALUE = 0, maxVALUE = 1,
-                write.csv = FALSE, path2write = "./")
+path2data <- "/media/alpenv/Projekte/HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia"
+P2 <- dB_getSWC(path2data = path2data, station = "P2", aggregation = "h", 
+                minVALUE = 0, maxVALUE = 1, write.csv = FALSE, path2write = "./")
 # use calibration function
-data(calibration); View(calibration)
-P2_cal <- dB_getSWC(path2files = path2files, header.file = header.file, station = "P", 
-                    station_nr = 2, aggregation = "h", minVALUE = 0, maxVALUE = 1,
-                    calibrate=T)
+data("calibration"); View(calibration)
+P2_cal <- dB_getSWC(path2data = path2data, station = "P2", aggregation = "h", 
+                    minVALUE = 0, maxVALUE = 1, calibrate=T)
 # compare
 P2_merge <- merge(P2[,1], P2_cal[,1])
 time(P2_merge) <- as.POSIXct(time(P2_merge))
-dygraphs(P2_merge)
+dygraph(P2_merge) %>%
+  dyRangeSelector() %>% dyRoller()
+
 ```
 
 ---
@@ -100,7 +100,7 @@ cat('<iframe src="./assets/widgets/dygraph1.html" width=100% height=100% allowtr
 ```{r DataBaseAlpEnvEURAC2, echo=T, eval=F}
 # creating .sqlite database for specific variables or total data
 # for SWC .sqlite database is copied in data folder of SMCcalibrate package
-# this is needed for downloading data with the clibration shiny app
+# this is needed for downloading data with the calibration shiny app
 
 P <- dB_updatedb(stations = c("P1","P2","P3"), variables = "SWC", 
                  inCloud = "/home/jbre/Schreibtisch/", 
@@ -128,6 +128,7 @@ data("SensorVSample")
 
 # data description
 ?SensorVSample
+View(SensorVSample)
 
 # reduce data
 data <- unique(data[,-8])
@@ -142,19 +143,29 @@ shinyApp(ui, server)
 ## DataBaseAlpEnvEURAC - postprocess .zrx 
 
 + **dB_readZRX** - read ZRX data file, working for single variable and multiple variables in .zrx file
-+ used by **dB_readZRX2station** - process ZRX data files, return .csv file for each station containing available variables.
++ used by **dB_readZRX2station** - process ZRX data files, returns .csv file for each station containing available variables and station meta data.
 
 ```{r DataBaseAlpEnvEURAC3, echo=T, eval=F}
-
-files <- dir("/home/jbre/Schreibtisch/zrx/Mazia0480", full.names = T)
-mazia <- dB_readZRX2station(files = files, write_csv = T, output_path = getwd(), 
-                            multivar = TRUE)
-plot(mazai$st0480)
-
 files <- dir("/home/jbre/Schreibtisch/zrx/SouthTyrol", full.names = T)
-data <- dB_readZRX2station(files = files, write_csv = F, output_path = getwd(), 
+data <- dB_readZRX2station(files = files, write_csv = F, 
                            multivar = FALSE)
 
+path <- "/home/jbre/Schreibtisch/zrx/Mazia0480"
+files <- dir(path, full.names = T)
+mazia <- dB_readZRX2station(files = files, write_csv = T, output_path = path, 
+                            multivar = TRUE)
+# show data.table
+library(DT)
+matschdata <- read_csv(file.path(path,"st0480_1440.csv"))
+datatable(matschdata)
+```
+
+---
+
+### Matsch-0480 data after postprocess
+
+```{r dt1, echo=FALSE, warning=FALSE,cache=FALSE,results='asis'}
+cat('<iframe src="./assets/widgets/dt1.html" width=100% height=100% allowtransparency="true"> </iframe>')
 ```
 
 ---
@@ -196,10 +207,41 @@ cat('<iframe src="./assets/widgets/leaflet1.html" width=100% height=100% allowtr
 
 ---
 
+## Analyse GEOtop
+
+---
+
+## Vignettes in R
+
++ long-form documentation for R packages
++ install GitHub packages with vignettes accordingly
+
+```{r introVignettes, echo=T, eval=F}
+library(devtools)
+
+# install GitHub R package & build vignettes
+install_github("JBrenn/TopoSUB", build_vignettes = TRUE)
+
+# browse for package vignettes or look them up in package directory ("doc")
+browseVignettes("TopoSUB")
+```
+
++ [Run a TopoSUB simulation](http://127.0.0.1:21307/library/TopoSUB/doc/Lect_1_RunTopoSUB.html)
++ [Postprocess a TopoSUB simulation](http://127.0.0.1:21307/library/TopoSUB/doc/Lect_2_Postprocess.html)
++ [Visualize a TopoSUB simulation](http://127.0.0.1:21307/library/TopoSUB/doc/Lect_3_Visualisation.html)
+
+---
+
+## TopoSUB shiny app
+
+
+
+---
+
 ## include a source, e.g. ref
 
 <div class='source'>
-  Source: <a href='http://www.subtlepatterns.com'>Background from SubtlePatterns</a>
+  This presentation is built with <a href='http://slidify.org/'>slidify</a> THANKS to the developer <a href='https://github.com/ramnathv'>Ramnath Vaidyanathan</a>.
 </div>
 
 
