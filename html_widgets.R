@@ -47,3 +47,7 @@ m <- leaflet() %>%
   )
 
 saveWidget(m, 'leaflet1.html')
+library(DT); library(readr)
+matschdata <- read_csv("/home/jbre/Schreibtisch/zrx/st0480_1440.csv")
+dt1 <- datatable(matschdata)
+saveWidget(dt1, 'dt1.html')
