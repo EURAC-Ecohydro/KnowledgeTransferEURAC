@@ -33,20 +33,22 @@ r_kp <- raster("/home/jbre/R/OrdKrig/Humus____/maps/AdigeVenosta_Humus_____100_p
 r_kp_20 <- raster("/home/jbre/R/OrdKrig/Humus____/maps/AdigeVenosta_Humus_____20_predict_sp_krige.tif")
 r_idw <- raster("/home/jbre/R/OrdKrig/Humus____/maps/AdigeVenosta_Humus_____100_predict_sp_idw.tif")
 
-pal <- colorNumeric(c("#0C2C84", "#41B6C4", "#FFFFCC"), values(r)[values(r)<=15], na.color = "transparent")
+pal <- colorNumeric(c("#0C2C84", "#41B6C4", "#FFFFCC"), values(r_kp)[values(r_kp)<=15], na.color = "transparent")
 m <- leaflet() %>%
   addTiles(group = "OSM (default)") %>%
 #  addProviderTiles("Acetate.terrain", group = "Terrain")  %>% 
   addRasterImage(r_kp_20, colors = pal, opacity = 0.8, group = "krige 20m") %>%
   addRasterImage(r_kp, colors = pal, opacity = 0.8, group = "krige 100m") %>%
   addRasterImage(r_idw, colors = pal, opacity = 0.8, group = "idw 100m") %>%
-  addLegend(pal = pal, values = values(r), title = "Humus fraction in %")  %>% 
+  addLegend(pal = pal, values = values(r_kp), title = "Humus fraction in %")  %>% 
   addLayersControl(
     overlayGroups = c("krige 20m", "krige 100m", "idw 100m"),
     options = layersControlOptions(collapsed = FALSE)
   )
 
 saveWidget(m, 'leaflet1.html')
+
+## @knitr dt1
 library(DT); library(readr)
 matschdata <- read_csv("/home/jbre/Schreibtisch/zrx/st0480_1440.csv")
 dt1 <- datatable(matschdata)
