@@ -2,7 +2,7 @@
 # Johannes Brenner, alpenv, EURAC
 
 # dependencies:
-#install.packages("devtools","dygraphs","zoo","shiny","readr","DT","raster","leaflet","ggplot2")
+#install.packages("devtools","dygraphs","zoo","shiny","readr","DT","raster","leaflet","ggplot2","rgdal)
 
 #1 -----
 #  install R libraries from GitHub
@@ -134,17 +134,25 @@
   plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
   
 # visualize output maps with leaflet
+  library(rgdal)
   library(raster)
   library(leaflet)
 # load raster maps from output directory  
   r_kp <- raster(file.path(wpath,"Humus____/maps/AdigeVenosta_Humus_____100_predict_sp_krige.tif"))
   r_kp_20 <- raster(file.path(wpath,"Humus____/maps/AdigeVenosta_Humus_____20_predict_sp_krige.tif"))
   r_idw <- raster(file.path(wpath,"Humus____/maps/AdigeVenosta_Humus_____100_predict_sp_idw.tif"))
+# load observed data  
+  points <- read.csv(file.path(wpath,"master/Masterfile_AdigeVenosta.txt"), header=TRUE)
+# reproject utm -> lat/long  
+  points_xy <- project(cbind(points$x_Coord, points$y_Coord), proj = "+proj=utm +zone=32 ellps=WGS84", inv = TRUE)
 # define map colors  
   pal <- colorNumeric(c("#0C2C84", "#41B6C4", "#FFFFCC"), values(r_kp)[values(r_kp)<=15], na.color = "transparent")
 # leaflet map
   leaflet() %>%
     addTiles(group = "OSM (default)") %>%
+    addCircleMarkers(lng=points_xy[,1], lat = points_xy[,2], radius = 3, group = "observations", opacity = .5, color = "orange",
+                     popup = paste(points$ComuneCata, points$TipoColtur, "| Humus Fraction", points$Humus____, "%"),
+                     clusterOptions = markerClusterOptions()) %>%
     addRasterImage(r_kp_20, colors = pal, opacity = 0.8, group = "krige 20m") %>%
     addRasterImage(r_kp, colors = pal, opacity = 0.8, group = "krige 100m") %>%
     addRasterImage(r_idw, colors = pal, opacity = 0.8, group = "idw 100m") %>%
