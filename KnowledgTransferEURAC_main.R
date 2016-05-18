@@ -1,6 +1,9 @@
 # script for knowledge transfer presentation - 2016-05-19
 # Johannes Brenner, alpenv, EURAC
 
+# dependencies:
+#install.packages("devtools","dygraphs","zoo","shiny","readr","DT","raster","leaflet","ggplot2")
+
 #1 -----
 #  install R libraries from GitHub
 
@@ -88,7 +91,7 @@
 #  DataBaseAlpEnvEURAC - postprocess .zrx from batch WISKI download (Province Meteo Database)
   
 # read data from two .zrx files containing different variables (multivar = FALSE)
-  path2files <- "/media/alpenv/Projekte/HiResAlp/06_Workspace/BrJ/02_data/WISKI/zrx/SouthTyrol"
+  path2files <- "/media/alpenv/Präsentationen/BrJ_KnowledgeTransfer/data/zrx/SouthTyrol"
   files <- dir(path2files, full.names = T)
   data <- dB_readZRX2station(files = files, write_csv = F, multivar = FALSE)
   str(data$st0480)
@@ -96,9 +99,10 @@
 
 # read data from single .zrx file containing multiple variables (multivar = TRUE)
 # files are written in output_path directory, data file for each station and meta data file  
-  path2files <- "/media/alpenv/Projekte/HiResAlp/06_Workspace/BrJ/02_data/WISKI/zrx/Mazia0480"
+  path2files <- "/media/alpenv/Präsentationen/BrJ_KnowledgeTransfer/data/zrx/Mazia0480"
   files <- dir(path2files, full.names = T)
-  mazia <- dB_readZRX2station(files = files, write_csv = T, output_path = path2files, multivar = TRUE)
+  output_path <- "/media/alpenv/Präsentationen/BrJ_KnowledgeTransfer/data/zrx"
+  mazia <- dB_readZRX2station(files = files, write_csv = T, output_path = output_path, multivar = TRUE)
   plot(mazia$st0480)
   
 # show data.table of written data
@@ -117,11 +121,13 @@
   library(SpatialInterpol)
   
 # ordinary kriging, resolution of output is resolution of raster mask  
-  ordkrig100 <- OrdKrig(datafolder = "master", variable = "Humus____")
+  wpath = "/media/alpenv/Präsentationen/BrJ_KnowledgeTransfer/data/OrdKrig"
+  
+  ordkrig100 <- OrdKrig(wpath = wpath, datafolder = "master", variable = "Humus____")
 # resample utput resolution to 20m  
-  ordkrig20  <- OrdKrig(datafolder = "master", variable = "Humus____", npix = 20)
+  ordkrig20  <- OrdKrig(wpath = wpath, datafolder = "master", variable = "Humus____", npix = 20)
 # inverse distance weighting  
-  idw     <- OrdKrig(datafolder = "master", variable = "Humus____", inverseDistWeigths = TRUE)
+  idw     <- OrdKrig(wpath = wpath, datafolder = "master", variable = "Humus____", inverseDistWeigths = TRUE)
 # plot sample variogram and fitted variagram   
   plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
   
@@ -129,9 +135,9 @@
   library(raster)
   library(leaflet)
 # load raster maps from output directory  
-  r_kp <- raster("/home/jbre/R/OrdKrig/Humus____/maps/AdigeVenosta_Humus_____100_predict_sp_krige.tif")
-  r_kp_20 <- raster("/home/jbre/R/OrdKrig/Humus____/maps/AdigeVenosta_Humus_____20_predict_sp_krige.tif")
-  r_idw <- raster("/home/jbre/R/OrdKrig/Humus____/maps/AdigeVenosta_Humus_____100_predict_sp_idw.tif")
+  r_kp <- raster(file.path(wpath,"Humus____/maps/AdigeVenosta_Humus_____100_predict_sp_krige.tif"))
+  r_kp_20 <- raster(file.path(wpath,"Humus____/maps/AdigeVenosta_Humus_____20_predict_sp_krige.tif"))
+  r_idw <- raster(file.path(wpath,"Humus____/maps/AdigeVenosta_Humus_____100_predict_sp_idw.tif"))
 # define map colors  
   pal <- colorNumeric(c("#0C2C84", "#41B6C4", "#FFFFCC"), values(r_kp)[values(r_kp)<=15], na.color = "transparent")
 # leaflet map
@@ -150,6 +156,7 @@
 #  Visualise SoilWaterRetentionCurves
   install_github("JBrenn/AnalyseGeotop")
   library(AnalyseGeotop)
+  library(ggplot2)
   
   GEOtop_VisSoilWaterRet(alpha = 0.02, n = 1.2, theta_sat = 0.52, theta_res = 0.05, add_ref_curves = T, png = F, ksat = 0.002)
   
