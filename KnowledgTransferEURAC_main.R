@@ -90,6 +90,8 @@
 #4 -----
 #  DataBaseAlpEnvEURAC - postprocess .zrx from batch WISKI download (Province Meteo Database)
   
+# download zrx data from ownCloud:  https://cloud.scientificnet.org/index.php/s/qjPCuMw5QWJklEZ  
+  
 # read data from two .zrx files containing different variables (multivar = FALSE)
   path2files <- "/media/alpenv/Präsentationen/BrJ_KnowledgeTransfer/data/zrx/SouthTyrol"
   files <- dir(path2files, full.names = T)
@@ -121,6 +123,7 @@
   library(SpatialInterpol)
   
 # ordinary kriging, resolution of output is resolution of raster mask  
+# download data for spatial interpolation from https://cloud.scientificnet.org/index.php/s/950PW7aOFd49ScD   
   wpath = "/media/alpenv/Präsentationen/BrJ_KnowledgeTransfer/data/OrdKrig"
   
   ordkrig100 <- OrdKrig(wpath = wpath, datafolder = "master", variable = "Humus____")
