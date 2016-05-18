@@ -143,7 +143,7 @@ shinyApp(ui, server)
 ## DataBaseAlpEnvEURAC - postprocess .zrx 
 
 + **dB_readZRX** - read ZRX data file, working for single variable and multiple variables in .zrx file
-+ used by **dB_readZRX2station** - process ZRX data files, returns .csv file for each station containing available variables and station meta data.
++ intern use by **dB_readZRX2station** - process ZRX data files, returns .csv file for each station containing available variables and station meta data.
 
 ```{r DataBaseAlpEnvEURAC3, echo=T, eval=F}
 files <- dir("/home/jbre/Schreibtisch/zrx/SouthTyrol", full.names = T)
