@@ -1266,7 +1266,7 @@ article.smaller q:before, article.smaller q:after {
 /* line 876, ../scss/default.scss */
 .thank-you-slide > p {
   position: absolute;
-  bottom: 100px;
+  bottom: 150px;
   font-size: 24pt;
   line-height: 1.3;
 }

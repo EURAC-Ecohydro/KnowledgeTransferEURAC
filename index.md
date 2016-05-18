@@ -25,6 +25,10 @@ all following R libraries are hosted on my GitHub account: [https://github.com/J
 > 4. **[AnalyseGEOtop](https://github.com/JBrenn/AnalyseGEOtop)** - GEOtop simulation analysis
 > 5. **[TopoSUB](https://github.com/JBrenn/TopoSUB)** - landscape k-means clustering & land-surface modeling with GEOtop
 
+<div class='source'>
+  The content of this presentation is covered by the R script "KnowledgTransferEURAC_main.R. You can find it in "//ABZ02FST/alpenv/Präsentationen/BrJ_KnowledgeTransfer".
+</div>
+
 ---
 
 ## Intro R & GitHub
@@ -137,7 +141,7 @@ shinyApp(ui, server)
 ## DataBaseAlpEnvEURAC - postprocess .zrx 
 
 + **dB_readZRX** - read ZRX data file, working for single variable and multiple variables in .zrx file
-+ used by **dB_readZRX2station** - process ZRX data files, returns .csv file for each station containing available variables and station meta data.
++ intern use by **dB_readZRX2station** - process ZRX data files, returns .csv file for each station containing available variables and station meta data.
 
 
 ```r
@@ -278,7 +282,8 @@ browseVignettes("TopoSUB")
 For more information you can browse
 
 <div class='source'>
-  This presentation is built with <a href='http://slidify.org/'>slidify</a> THANKS to the developer <a href='https://github.com/ramnathv'>Ramnath Vaidyanathan</a>.
+  This presentation is built with <a href='http://slidify.org/'>slidify</a> THANKS to the developer <a href='https://github.com/ramnathv'>Ramnath Vaidyanathan</a>. <br>
+    The content of this presentation is covered by the R script "KnowledgTransferEURAC_main.R". You can find it in "//ABZ02FST/alpenv/Präsentationen/BrJ_KnowledgeTransfer/".
 </div>
 
 
