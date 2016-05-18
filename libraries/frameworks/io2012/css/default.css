@@ -1250,7 +1250,7 @@ article.smaller q:before, article.smaller q:after {
 
 /* line 862, ../scss/default.scss */
 .thank-you-slide {
-  background: #4387fd !important;
+  background: black !important;
   color: white;
 }
 /* line 866, ../scss/default.scss */
@@ -1266,7 +1266,7 @@ article.smaller q:before, article.smaller q:after {
 /* line 876, ../scss/default.scss */
 .thank-you-slide > p {
   position: absolute;
-  bottom: 80px;
+  bottom: 100px;
   font-size: 24pt;
   line-height: 1.3;
 }
@@ -1380,7 +1380,7 @@ aside.gdbar img {
 }
 /* line 965, ../scss/default.scss */
 [data-config-contact] span {
-  width: 115px;
+  width: 100px;
   display: inline-block;
 }
 

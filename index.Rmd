@@ -89,7 +89,7 @@ library(knitr); library(htmlwidgets); library(dplyr)
 read_chunk('html_widgets.R')
 ```
 
-```{r, 'dygraph1', echo=FALSE, warning=FALSE,cache=FALSE,results='asis'}
+```{r dygraph, echo=FALSE, warning=FALSE,cache=FALSE,results='asis'}
 cat('<iframe src="./assets/widgets/dygraph1.html" width=100% height=100% allowtransparency="true"> </iframe>')
 ```
 
@@ -164,7 +164,7 @@ datatable(matschdata)
 
 ### Matsch-0480 data after postprocess
 
-```{r dt1, echo=FALSE, warning=FALSE,cache=FALSE,results='asis'}
+```{r dt, echo=FALSE, warning=FALSE,cache=FALSE,results='asis'}
 cat('<iframe src="./assets/widgets/dt1.html" width=100% height=100% allowtransparency="true"> </iframe>')
 ```
 
@@ -182,6 +182,20 @@ Example:
 + Download or clone Git repository DataBaseAlpEnvEURAC
 + In the folder *Rmd* find the file **01_data_preparation_climate_quality.rmd**
 + open/run in RStudio
+
+<div class='source'>
+  Source <a href='http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf'>R Markdown Cheat Sheet</a>
+</div>
+
+
+<style>
+em {
+  font-style: italic
+}
+strong {
+  font-weight: bold;
+}
+</style>
 
 --- bg:#EEE
 
@@ -209,7 +223,34 @@ cat('<iframe src="./assets/widgets/leaflet1.html" width=100% height=100% allowtr
 
 ## Analyse GEOtop
 
++ R markdown docs on time series visualisation, GOFs for comparision with observed time series, and simple visual sensitivity
++ read GEOtop 1d simulation output: **GEOtop_ReadPointData**, **GEOtop_readValidationData**
++ Create Geotop input maps with __RSAGA__: **GEOtop_CreateInptsMAPS**
++ Hydrological Budget for 3d simulations: **GEOtop_CheckHydroBudget**
++ Output map animation: **GEOtop_AnimateMaps**
+
++ Visualisation of pF-Curves: **GEOtop_VisSoilWaterRet** (base), **GEOtop_VisSoilWaterRet_gg** (ggplot2)
+
 ---
+
+```{r pF-Curves, echo=T, eval=T, warning=F, results='hide', fig.height=7.5, fig.width=7.5}
+library(AnalyseGeotop)
+GEOtop_VisSoilWaterRet(alpha = 0.02, n = 1.2, theta_sat = 0.52, theta_res = 0.05, 
+                       ksat = 0.002, add_ref_curves = T, png = F, accurate = 1)
+```
+
+---
+
+## TopoSUB
+
+<div class="figure" style='text-align: center;'>
+    <p><img height='400' src='./assets/img/fig1.png'>
+    <p>TopoSUB methodology - R functions to use for specific tasks: <br> (b) + (c) TopoSUB_preprocessor, (d) TopoSUB_read and  TopoSUB_remap, (e) shiny app
+</div>
+
+---
+
+
 
 ## Vignettes in R
 
@@ -223,6 +264,7 @@ library(devtools)
 install_github("JBrenn/TopoSUB", build_vignettes = TRUE)
 
 # browse for package vignettes or look them up in package directory ("doc")
+library(TopoSUB)
 browseVignettes("TopoSUB")
 ```
 
@@ -230,15 +272,14 @@ browseVignettes("TopoSUB")
 + [Postprocess a TopoSUB simulation](http://127.0.0.1:21307/library/TopoSUB/doc/Lect_2_Postprocess.html)
 + [Visualize a TopoSUB simulation](http://127.0.0.1:21307/library/TopoSUB/doc/Lect_3_Visualisation.html)
 
----
+--- {
+ tpl: thankyou,
+ social: [{title: github, href: "https://github.com/JBrenn"}]
+}
 
-## TopoSUB shiny app
+## Thank You
 
-
-
----
-
-## include a source, e.g. ref
+For more information you can browse
 
 <div class='source'>
   This presentation is built with <a href='http://slidify.org/'>slidify</a> THANKS to the developer <a href='https://github.com/ramnathv'>Ramnath Vaidyanathan</a>.
@@ -251,5 +292,17 @@ em {
 }
 strong {
   font-weight: bold;
+}
+div.figure {
+  float: right;
+  width: 90%;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+div.figure p {
+  text-align: left;
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
 }
 </style>

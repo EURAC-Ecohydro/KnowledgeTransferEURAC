@@ -273,6 +273,19 @@ datatable(matschdata)
 <li>open/run in RStudio</li>
 </ul>
 
+<div class='source'>
+  Source <a href='http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf'>R Markdown Cheat Sheet</a>
+</div>
+
+<style>
+em {
+  font-style: italic
+}
+strong {
+  font-weight: bold;
+}
+</style>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -311,12 +324,47 @@ plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
     <h2>Analyse GEOtop</h2>
   </hgroup>
   <article data-timings="">
-    
+    <ul>
+<li>R markdown docs on time series visualisation, GOFs for comparision with observed time series, and simple visual sensitivity</li>
+<li>read GEOtop 1d simulation output: <strong>GEOtop_ReadPointData</strong>, <strong>GEOtop_readValidationData</strong></li>
+<li>Create Geotop input maps with <strong>RSAGA</strong>: <strong>GEOtop_CreateInptsMAPS</strong></li>
+<li>Hydrological Budget for 3d simulations: <strong>GEOtop_CheckHydroBudget</strong></li>
+<li><p>Output map animation: <strong>GEOtop_AnimateMaps</strong></p></li>
+<li><p>Visualisation of pF-Curves: <strong>GEOtop_VisSoilWaterRet</strong> (base), <strong>GEOtop_VisSoilWaterRet_gg</strong> (ggplot2)</p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">library(AnalyseGeotop)
+GEOtop_VisSoilWaterRet(alpha = 0.02, n = 1.2, theta_sat = 0.52, theta_res = 0.05, 
+                       ksat = 0.002, add_ref_curves = T, png = F, accurate = 1)
+</code></pre>
+
+<p><img src="assets/fig/pF-Curves-1.png" alt="plot of chunk pF-Curves"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>TopoSUB</h2>
+  </hgroup>
+  <article data-timings="">
+    <div class="figure" style='text-align: center;'>
+    <p><img height='400' src='./assets/img/fig1.png'>
+    <p>TopoSUB methodology - R functions to use for specific tasks: <br> (b) + (c) TopoSUB_preprocessor, (d) TopoSUB_read and  TopoSUB_remap, (e) shiny app
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Vignettes in R</h2>
   </hgroup>
@@ -332,6 +380,7 @@ plot(ordkrig100$AdigeVenosta$vario, ordkrig100$AdigeVenosta$vario_fit)
 install_github(&quot;JBrenn/TopoSUB&quot;, build_vignettes = TRUE)
 
 # browse for package vignettes or look them up in package directory (&quot;doc&quot;)
+library(TopoSUB)
 browseVignettes(&quot;TopoSUB&quot;)
 </code></pre>
 
@@ -345,22 +394,13 @@ browseVignettes(&quot;TopoSUB&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
-  <hgroup>
-    <h2>TopoSUB shiny app</h2>
-  </hgroup>
-  <article data-timings="">
-    
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<slide class="thank-you-slide segue nobackground" id="slide-17">
+  <aside class="gdbar right"><img src="assets/img/logo.png"></aside>
+  <article class="flexbox vleft auto-fadein">
+    <h2>Thank You</h2>
+    <p>For more information you can browse</p>
 
-<slide class="" id="slide-16" style="background:;">
-  <hgroup>
-    <h2>include a source, e.g. ref</h2>
-  </hgroup>
-  <article data-timings="">
-    <div class='source'>
+<div class='source'>
   This presentation is built with <a href='http://slidify.org/'>slidify</a> THANKS to the developer <a href='https://github.com/ramnathv'>Ramnath Vaidyanathan</a>.
 </div>
 
@@ -371,12 +411,26 @@ em {
 strong {
   font-weight: bold;
 }
+div.figure {
+  float: right;
+  width: 90%;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+div.figure p {
+  text-align: left;
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
+}
 </style>
 
   </article>
-  <!-- Presenter Notes -->
-</slide>
 
+  <p class="auto-fadein" data-config-contact="">
+    <span>github</span><a href="https://github.com/JBrenn">https://github.com/JBrenn</a><br>
+  </p>
+</slide>
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
@@ -461,20 +515,26 @@ strong {
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Vignettes in R'>
+        data-slide=14 title='NA'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='TopoSUB shiny app'>
+        data-slide=15 title='TopoSUB'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='include a source, e.g. ref'>
+        data-slide=16 title='Vignettes in R'>
          16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Thank You'>
+         17
       </a>
     </li>
   </ul>
