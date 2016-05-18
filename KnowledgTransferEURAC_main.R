@@ -56,6 +56,13 @@
   all_st_swc <- dB_updatedb(path2data = path2data, stations = station, variables = "SWC", 
                             inCloud = "/home/jbre/Schreibtisch/", write_csv = F, return_data = T)
   
+# get GEOtop input file for station B2 & P2
+  
+  data <- dB_getGEOtop(path2data = path2data, station = c("B2", "P2"), aggr_time = "h")
+  # .txt output in working directory
+  # list with two entries - B2 and P2; NA value is -9999 (Geotop convention)
+  str(data)
+  
 #3 -----
 #  interactive shiny app for soil moisture sensor calibration and data download if "download" branch installed
   
