@@ -2,7 +2,7 @@
 title       : Knowledge Transfer
 subtitle    : R libraries for alpenv
 author      : Johannes Brenner
-job         : EURAC, Institute for Alpine Environment
+job         : Institute for Alpine Environment, EURAC
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
@@ -19,11 +19,11 @@ github      : {user: JBrenn, repo: KnowledgeTransferEURAC}
 
 all following R libraries are hosted on my GitHub account: [https://github.com/JBrenn](https://github.com/JBrenn)
 
-> 1. **[DataBaseAlpEnvEURAC](https://github.com/JBrenn/DataBaseAlpEnvEURAC)** - reading, formating, writing Mazia LTER data; post-process WISKI .rzx files
-> 2. **[SMCcalibration](https://github.com/JBrenn/SMCcalibration)** - shiny app for calibrating SMC sensors
+> 1. **[DataBaseAlpEnvEURAC](https://github.com/JBrenn/DataBaseAlpEnvEURAC)** - from raw LTER data to database: reading, formating, writing Mazia LTER data; post-process WISKI .rzx files
+> 2. **[SMCcalibration](https://github.com/JBrenn/SMCcalibration)** - interactive shiny app for calibrating SMC sensors
 > 3. **[SpatialInterpol](https://github.com/JBrenn/SpatialInterpol)** - spatial interpolation using local ordinary kriging and inverse distance weighting
 > 4. **[AnalyseGEOtop](https://github.com/JBrenn/AnalyseGEOtop)** - GEOtop simulation analysis
-> 5. **[TopoSUB](https://github.com/JBrenn/TopoSUB)** - landscape k-means clustering & land-surface modelling with GEOtop
+> 5. **[TopoSUB](https://github.com/JBrenn/TopoSUB)** - landscape k-means clustering & land-surface modeling with GEOtop
 
 ---
 
