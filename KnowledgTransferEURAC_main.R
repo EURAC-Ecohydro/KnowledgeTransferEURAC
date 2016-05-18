@@ -86,7 +86,6 @@
 # run shiny app
   shinyApp(ui, server)  
   
-
 #4 -----
 #  DataBaseAlpEnvEURAC - postprocess .zrx from batch WISKI download (Province Meteo Database)
   
@@ -155,7 +154,7 @@
       options = layersControlOptions(collapsed = FALSE)
     )
 
-#5 -----
+#6 -----
 #  Visualise SoilWaterRetentionCurves
   install_github("JBrenn/AnalyseGeotop")
   library(AnalyseGeotop)
@@ -174,8 +173,17 @@
                                   add_ref_curves = T, observed = observed_20)
   gg
   
-#6 -----
+#7 -----
 #  get TopoSUB vignettes
   browseVignettes("TopoSUB")
+  
+#8 -----
+#  get mobile campaigns' SMC data (project HiResAlp)
+  install_github("JBrenn/SoilMoisturePattern")
+  library(SoilMoisturePattern)
+  
+  data("HiResAlp_MobileCampaigns")
+  summary(HiResAlp_MobileCampaigns)
+  str(HiResAlp_MobileCampaigns)
   
   

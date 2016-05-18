@@ -24,6 +24,7 @@ all following R libraries are hosted on my GitHub account: [https://github.com/J
 > 3. **[SpatialInterpol](https://github.com/JBrenn/SpatialInterpol)** - spatial interpolation using local ordinary kriging and inverse distance weighting
 > 4. **[AnalyseGEOtop](https://github.com/JBrenn/AnalyseGEOtop)** - GEOtop simulation analysis
 > 5. **[TopoSUB](https://github.com/JBrenn/TopoSUB)** - landscape k-means clustering & land-surface modeling with GEOtop
+> 6. **[SoilMoisturePattern](https://github.com/JBrenn/SoilMoisturePattern)** - mobile campaigns' SMC data (project HiResAlp)
 
 <div class='source'>
   The content of this presentation is covered by the R script "KnowledgTransferEURAC_main.R. You can find it in "//ABZ02FST/alpenv/Präsentationen/BrJ_KnowledgeTransfer".
