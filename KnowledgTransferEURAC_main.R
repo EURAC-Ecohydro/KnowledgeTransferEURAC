@@ -4,7 +4,7 @@
 # dependencies:
 #install.packages("devtools","dygraphs","zoo","shiny","readr","DT","raster","leaflet","ggplot2","rgdal)
 #library("devtools")
-#install_github('ramnathv/rCharts')
+#install_github("amnathv/rCharts", ref="dev")
 
 #1 -----
 #  install R libraries from GitHub
@@ -197,5 +197,10 @@
   data("HiResAlp_MobileCampaigns")
   summary(HiResAlp_MobileCampaigns)
   str(HiResAlp_MobileCampaigns)
+  
+  r1 <- rPlot(SoilMoisture_mean_Processed ~ slope, data = HiResAlp_MobileCampaigns, type = 'point')
+  r1$addControls('x', 'SoilMoisture_mean_Processed', names(HiResAlp_MobileCampaigns))
+  r1$addControls('y', 'slope', names(HiResAlp_MobileCampaigns))
+  r1
   
   
