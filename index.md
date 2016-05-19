@@ -287,6 +287,11 @@ For more information you can browse
     The content of this presentation is covered by the R script "KnowledgTransferEURAC_main.R". You can find it in "//ABZ02FST/alpenv/Präsentationen/BrJ_KnowledgeTransfer/".
 </div>
 
+---
+
+<iframe src=' assets/fig/HiResAlp-1.html ' scrolling='no' frameBorder='0' seamless class='rChart polycharts ' id=iframe- chart119f37881c75 ></iframe> <style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+
 
 <style>
 em {

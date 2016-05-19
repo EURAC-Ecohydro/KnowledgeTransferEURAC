@@ -291,6 +291,19 @@ For more information you can browse
     The content of this presentation is covered by the R script "KnowledgTransferEURAC_main.R". You can find it in "//ABZ02FST/alpenv/Präsentationen/BrJ_KnowledgeTransfer/".
 </div>
 
+---
+
+```{r HiResAlp, results = 'asis', comment = NA, message = F, echo = F}
+library(rCharts)
+library(SoilMoisturePattern)
+data("HiResAlp_MobileCampaigns")
+  r1 <- rPlot(SoilMoisture_mean_Processed ~ slope, data = HiResAlp_MobileCampaigns, type = 'point')
+  r1$addControls('x', 'SoilMoisture_mean_Processed', names(HiResAlp_MobileCampaigns))
+  r1$addControls('y', 'slope', names(HiResAlp_MobileCampaigns))
+  r1
+```
+
+
 
 <style>
 em {

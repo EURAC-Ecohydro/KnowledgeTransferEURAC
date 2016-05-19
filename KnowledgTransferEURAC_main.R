@@ -3,11 +3,13 @@
 
 # dependencies:
 #install.packages("devtools","dygraphs","zoo","shiny","readr","DT","raster","leaflet","ggplot2","rgdal)
+#library("devtools")
+#install_github('ramnathv/rCharts')
 
 #1 -----
 #  install R libraries from GitHub
 
-  library(devtools)
+  library("devtools")
 
 # install master branch of DataBaseAlpEnvEURAC 
   install_github("JBrenn/DataBaseAlpEnvEURAC")
@@ -20,9 +22,9 @@
   
 #2 -----
 #  load LTER data with DataBaseAlpEnvEURAC
-  library(DataBaseAlpEnvEURAC)
-  library(dygraphs)
-  library(zoo)
+  library("DataBaseAlpEnvEURAC")
+  library("dygraphs")
+  library("zoo")
   
 # easy data access, e.g. SWC data station P2, with the possibility to write .csv files, range selection for variables and aggregation
   path2data <- "/media/alpenv/Projekte/HiResAlp/06_Workspace/BrJ/02_data/Station_data_Mazia"
@@ -70,8 +72,8 @@
 #  interactive shiny app for soil moisture sensor calibration and data download if "download" branch installed
   
 # load libraries
-  library(SMCcalibration)
-  library(shiny)
+  library("SMCcalibration")
+  library("shiny")
   
 # easy data access
   data("SensorVSample")
@@ -107,7 +109,7 @@
   plot(mazia$st0480)
   
 # show data.table of written data
-  library(DT); library(readr)
+  library("DT"); library("readr")
   matschdata <- read_csv(file.path(path2files,"st0480_1440.csv"))
   datatable(matschdata)
   
@@ -119,7 +121,7 @@
 # with "optim" or "hydroPSO"  
   
   install_github("JBrenn/SpatialInterpol")
-  library(SpatialInterpol)
+  library("SpatialInterpol")
   
 # ordinary kriging, resolution of output is resolution of raster mask  
 # download data for spatial interpolation from https://cloud.scientificnet.org/index.php/s/950PW7aOFd49ScD   
@@ -165,8 +167,8 @@
 #6 -----
 #  Visualise SoilWaterRetentionCurves
   install_github("JBrenn/AnalyseGeotop")
-  library(AnalyseGeotop)
-  library(ggplot2)
+  library("AnalyseGeotop")
+  library("ggplot2")
   
   GEOtop_VisSoilWaterRet(alpha = 0.02, n = 1.2, theta_sat = 0.52, theta_res = 0.05, add_ref_curves = T, png = F, ksat = 0.002)
   
@@ -187,8 +189,10 @@
   
 #8 -----
 #  get mobile campaigns' SMC data (project HiResAlp)
+  library("rCharts")
+  
   install_github("JBrenn/SoilMoisturePattern")
-  library(SoilMoisturePattern)
+  library("SoilMoisturePattern")
   
   data("HiResAlp_MobileCampaigns")
   summary(HiResAlp_MobileCampaigns)
